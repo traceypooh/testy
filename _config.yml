@@ -1,5 +1,20 @@
-keep_files: ["2022", img, js, css, index.htm, theme.js, robots.txt, sitemap.xml]
 exclude:
   - bin
+keep_files: [
+  "2023",
+  "2022",
+  "2021",
+  "2020",
+  "2019",
+  css,
+  images,
+  img,
+  js,
+  pages,
+  posts,
+  robots.txt,
+  sitemap.xml,
+  theme.js,
+]
 # plugins:
 #  - jekyll-sitemap
