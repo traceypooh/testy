@@ -1,2 +1,3 @@
+exclude: [index.html]
 plugins:
   - jekyll-sitemap
