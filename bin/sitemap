@@ -1,0 +1,11 @@
+#!/bin/zsh -e
+
+mydir=${0:a:h}
+cd $mydir/..
+
+for htm in $(cd _site && find . -name index.htm); do
+  echo -- "$htm"
+  dir=$(dirname -- "$htm")
+  mkdir -p "$dir"
+  [ -e "$dir/index.md" ]  ||  echo '---\n---' >| "$dir/index.md"
+done

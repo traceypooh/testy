@@ -1,6 +1,6 @@
-.eleventy.js
-package.json
-_site/README.md
-_site/sitemap.xml
-_site/robots.txt
 .jekyll-cache
+2022
+_site/**/index.html
+_site/README.md
+_site/robots.txt
+_site/sitemap.xml
