@@ -1,4 +1,3 @@
-exclude: [2022/]
 keep_files: [2022/]
 plugins:
   - jekyll-sitemap
