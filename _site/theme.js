@@ -225,7 +225,7 @@ function post_full(title, img, date, taglinks, catlinks, body) {
 function post_card(title, img, date, taglinks, catlinks, body, url) {
   return `
     <div class="card card-body bg-light">
-      <a href="?${url}">
+      <a href="${location.protocol === 'file:' ? url : url.replace(/\/index.html*$/, '')}">
         ${img ? `<img src="${img}">` : ''}
         <h2>${title}</h2>
       </a>
