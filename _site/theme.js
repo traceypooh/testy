@@ -53,28 +53,6 @@ async function main() {
   const lines = document.getElementsByTagName('body')[0].innerHTML.split('\n')
   log({ lines })
 
-
-  document.getElementsByTagName('body')[0].innerHTML = `
-  <div class="container">
-    <div id="welcome" class="bg-light">
-    </div>
-    <div id="main-row" class="row">
-      <div class="col-md-10 order-md-2">
-        <div id="posts"></div>
-        <div id="spa"></div>
-      </div>
-      <div class="nav-left col-md-2 order-md-1">
-        <h5>Categories</h5>
-        <div id="nav-cats">
-        </div>
-        <h5>Tags</h5>
-        <div id="nav-tags">
-        </div>
-      </div>
-    </div>
-  </div>`
-
-
   const dirs = location.pathname.split('/').filter((e) => e !== '')
   // eslint-disable-next-line no-nested-ternary
   const is_topdir = location.protocol === 'file:'
@@ -87,11 +65,32 @@ async function main() {
   if (!is_topdir)
     return
 
+  document.getElementsByTagName('body')[0].innerHTML = `
+    <div class="container">
+      <div id="welcome" class="bg-light">
+      </div>
+      <div id="main-row" class="row">
+        <div class="col-md-10 order-md-2">
+          <div id="posts"></div>
+          <div id="spa"></div>
+        </div>
+        <div class="nav-left col-md-2 order-md-1">
+          <h5>Categories</h5>
+          <div id="nav-cats">
+          </div>
+          <h5>Tags</h5>
+          <div id="nav-tags">
+          </div>
+        </div>
+      </div>
+    </div>`
+
+
   // xxx if location.protocol === 'file:' swap out all sitemap https:// urls to file:
   const urls = (await (await (await fetch(`${path}sitemap.xml`)).text())).split('<loc>').slice(1)
     .map((e) => e.split('</loc>').slice(0, 1).join(''))
     // eslint-disable-next-line no-confusing-arrow
-    .map((e) => location.protocol === 'file:' ? e.replace('https://traceypooh.github.io/testy/', '') : e)
+    .map((e) => location.protocol === 'file:' ? e.replace('https://traceypooh.github.io/testy/', '') : e) // xxx
     .filter((e) => e !== '')
     // eslint-disable-next-line no-confusing-arrow
     .map((e) => e.endsWith('/') ? e.concat('index.htm') : e)
