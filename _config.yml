@@ -1,5 +1,6 @@
 exclude:
   - bin
+  - README.md
 keep_files: [
   "2023",
   "2022",
@@ -9,11 +10,13 @@ keep_files: [
   css,
   images,
   img,
+  index.html,
   js,
   pages,
   posts,
   robots.txt,
   sitemap.xml,
+  theme.css,
   theme.js,
 ]
 # plugins:
