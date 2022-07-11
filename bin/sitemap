@@ -18,7 +18,7 @@ for htm in $(cd _site && find . -name index.htm | cut -f2- -d/); do
     dir=$(dirname -- "$htm")
     echo "
 <url>
-  <loc>https://$NAME.github.io/$REPO/$dir</loc>
+  <loc>https://$NAME.github.io/$REPO/$dir/</loc>
 </url>" >> $OUTFILE
 done
 
