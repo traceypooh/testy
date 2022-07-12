@@ -14,8 +14,6 @@ keep_files: [
   js,
   pages,
   posts,
-  xxxrobots.txt,
-  xxxsitemap.xml,
   theme.css,
   theme.js,
 ]
