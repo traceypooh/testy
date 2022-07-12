@@ -93,7 +93,7 @@ async function main() {
     .map((e) => location.protocol === 'file:' ? e.replace('https://traceypooh.github.io/testy/', '') : e) // xxx
     .filter((e) => e !== '')
     // eslint-disable-next-line no-confusing-arrow
-    .map((e) => e.endsWith('/') ? e.concat('index.htm') : e)
+    .map((e) => e.endsWith('/') ? e.concat('index.html') : e)
   log({ urls })
   await xxx(urls)
 

@@ -14,8 +14,8 @@ keep_files: [
   js,
   pages,
   posts,
+  robots.txt,
+  sitemap.xml,
   theme.css,
   theme.js,
 ]
-plugins:
-  - jekyll-sitemap
