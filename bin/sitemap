@@ -7,35 +7,49 @@ NAME=$(git config remote.origin.url |cut -f2 -d: |cut -d/ -f1)
 REPO=$(git config remote.origin.url |cut -f2 -d: |cut -d/ -f2)
 OUTFILE=_site/sitemap.xml
 
-function manually() {
+PREFIX=https://$NAME.github.io/$REPO
+[ -e CNAME ]  &&  PREFIX=https://$(cat CNAME)
+
+function sitemap() {
+  echo -n Verifying sitemap
   echo '
   <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   ' >| $OUTFILE
 
-  for htm in $(cd _site && find . -mindepth 2 -name index.html | cut -f2- -d/); do
-      echo -- "$htm"
+  for htm in $(cd _site && find . -mindepth 2 -name index.html | cut -f2- -d/ |sort -r); do
+      echo -n .
       dir=$(dirname -- "$htm")
+      lastmod=$(git log -1 --format='%cI' -- "_site/$htm")
       echo "
   <url>
-    <loc>https://$NAME.github.io/$REPO/$dir/</loc>
+    <loc>$PREFIX/$dir/</loc>
+    <lastmod>$lastmod</lastmod>
   </url>" >> $OUTFILE
   done
 
   echo '</urlset>' >> $OUTFILE
 
 
-  echo "Sitemap: https://$NAME.github.io/$REPO/sitemap.xml" >| _site/robots.txt
+  echo "Sitemap: $PREFIX/sitemap.xml" >| _site/robots.txt
+  echo
 }
 
-
-function shadow() {
-  for htm in $(cd _site && find . -name index.htm); do
-    echo -- "$htm"
-    dir=$(dirname -- "$htm")
-    mkdir -p "$dir"
-    touch "$dir/index.html"
-  done
+function comments() {
+  (
+    mkdir -p _site/comments
+    cd       _site/comments
+    find . -mindepth 1 -type d |cut -b3- |sort -o index.txt
+    for DIR in $(cat index.txt); do
+      OUT=$DIR/index.json
+      echo '[' >| $OUT
+      for JSON in $(ls $DIR |egrep -v '^index.json$'); do
+        cat "$DIR/$JSON" >> $OUT
+        echo ",\n" >> $OUT
+      done
+      echo "\n{}\n]" >> $OUT
+    done
+  )
 }
 
-
-manually
+sitemap
+comments
